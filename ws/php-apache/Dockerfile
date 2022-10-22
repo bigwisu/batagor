@@ -10,9 +10,11 @@ COPY ports.conf /etc/apache2/ports.conf
 # Set ServerName to localhost to remove unnecessary warnings
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
     a2enmod rewrite && \
+    a2enmod userdir && \
     service apache2 restart
 
-#TODO Install composer and PHP extensions
+#TODO: Install composer and PHP extensions
+#TODO: automatically create public_html folder
 
 # setup Cloud Workstation
 RUN apt-get update && \
@@ -129,6 +131,5 @@ COPY --from=cloud-ws /etc/bash.bashrc /etc/bash.bashrc
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# ENTRYPOINT ["/google/scripts/entrypoint.sh"]
 ENTRYPOINT ["/usr/bin/supervisord"]
 
