@@ -14,7 +14,10 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
     service apache2 restart
 
 #TODO: Install composer and PHP extensions
-#TODO: automatically create public_html folder
+
+# add public_html to skeleton so will automatically create dir for each user
+RUN mkdir /etc/skel/public_html
+RUN echo "<h1>Working directory</h1>" > /etc/skel/public_html/index.html
 
 # setup Cloud Workstation
 RUN apt-get update && \
