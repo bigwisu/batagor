@@ -99,4 +99,7 @@ RUN sudo apt install nodejs -y
 # Hugo
 RUN sudo apt install -y hugo libsass1
 
+# npm packages to install globally
+RUN npm install -g firebase-tools
+
 ENTRYPOINT ["/google/scripts/entrypoint.sh"]
