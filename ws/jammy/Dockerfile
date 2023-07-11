@@ -96,10 +96,24 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 RUN sudo apt update -y
 RUN sudo apt install nodejs -y
 
+ENV PATH=$PATH:/usr/local/go/bin
+RUN wget https://storage.googleapis.com/golang/go1.20.5.linux-amd64.tar.gz && \
+    echo d7ec48cde0d3d2be2c69203bc3e0a44de8660b9c09a6e85c4732a3f7dc442612 go1.20.5.linux-amd64.tar.gz | sha256sum -c - && \
+    tar xzf go1.20.5.linux-amd64.tar.gz -C /usr/local && \
+    rm go1.20.5.linux-amd64.tar.gz
+
+# Install kind
+RUN export GOPATH=/google/gopath && \
+  /usr/local/go/bin/go install sigs.k8s.io/kind@v0.16.0
+ENV PATH=$PATH:/google/gopath/bin
+
 # Hugo
 RUN sudo apt install -y hugo libsass1
 
 # npm packages to install globally
 RUN npm install -g firebase-tools
+
+RUN npm install -g @angular/cli
+RUN npm install -g @nestjs/cli
 
 ENTRYPOINT ["/google/scripts/entrypoint.sh"]

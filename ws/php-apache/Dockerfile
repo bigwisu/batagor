@@ -84,17 +84,17 @@ RUN echo "Node: " && node -v
 RUN echo "NPM: " && npm -v
 
 ENV PATH=$PATH:/usr/local/go/bin
-RUN wget https://storage.googleapis.com/golang/go1.19.linux-amd64.tar.gz && \
-    echo 464b6b66591f6cf055bc5df90a9750bf5fbc9d038722bb84a9d56a2bea974be6 go1.19.linux-amd64.tar.gz | sha256sum -c - && \
-    tar xzf go1.19.linux-amd64.tar.gz -C /usr/local && \
-    rm go1.19.linux-amd64.tar.gz
+RUN wget https://storage.googleapis.com/golang/go1.20.5.linux-amd64.tar.gz && \
+    echo d7ec48cde0d3d2be2c69203bc3e0a44de8660b9c09a6e85c4732a3f7dc442612 go1.20.5.linux-amd64.tar.gz | sha256sum -c - && \
+    tar xzf go1.20.5.linux-amd64.tar.gz -C /usr/local && \
+    rm go1.20.5.linux-amd64.tar.gz
 
 # Install docker
 RUN mkdir -p /etc/apt/keyrings
-RUN curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 RUN cat /etc/apt/keyrings/docker.gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg && \
     echo \
-       "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
+       "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
         $(awk -F= '/^VERSION_CODENAME/{print$2}' /etc/os-release) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null && \
 	 apt-get update && \
     apt-get install -y docker-ce docker-ce-cli && \
