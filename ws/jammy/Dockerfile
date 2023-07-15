@@ -115,5 +115,6 @@ RUN npm install -g firebase-tools
 
 RUN npm install -g @angular/cli
 RUN npm install -g @nestjs/cli
+RUN npm install -g nx@16.5.2
 
 ENTRYPOINT ["/google/scripts/entrypoint.sh"]
