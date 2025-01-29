@@ -49,8 +49,10 @@ RUN DEBIAN_FRONTEND=noninteractive \
       openssh-client \
       openssh-server \
       procps \
+      python3-venv \
       runit \
       sudo \
+      supervisor \
       time \
       unzip \
       util-linux \
@@ -92,19 +94,19 @@ COPY --from=cloud-ws /etc/bash.bashrc /etc/bash.bashrc
 
 # Install packages for needed development
 # Node.js
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 RUN sudo apt update -y
 RUN sudo apt install nodejs -y
 
 ENV PATH=$PATH:/usr/local/go/bin
-RUN wget https://storage.googleapis.com/golang/go1.20.5.linux-amd64.tar.gz && \
-    echo d7ec48cde0d3d2be2c69203bc3e0a44de8660b9c09a6e85c4732a3f7dc442612 go1.20.5.linux-amd64.tar.gz | sha256sum -c - && \
-    tar xzf go1.20.5.linux-amd64.tar.gz -C /usr/local && \
-    rm go1.20.5.linux-amd64.tar.gz
+RUN wget https://storage.googleapis.com/golang/go1.23.5.linux-amd64.tar.gz && \
+    echo cbcad4a6482107c7c7926df1608106c189417163428200ce357695cc7e01d091 go1.23.5.linux-amd64.tar.gz | sha256sum -c - && \
+    tar xzf go1.23.5.linux-amd64.tar.gz -C /usr/local && \
+    rm go1.23.5.linux-amd64.tar.gz
 
 # Install kind
 RUN export GOPATH=/google/gopath && \
-  /usr/local/go/bin/go install sigs.k8s.io/kind@v0.16.0
+  /usr/local/go/bin/go install sigs.k8s.io/kind@v0.25.0
 ENV PATH=$PATH:/google/gopath/bin
 
 # Hugo
